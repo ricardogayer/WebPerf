@@ -4,9 +4,9 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 
-	"github.com/goccy/go-json"
-	"github.com/gofiber/fiber/v2"
+	"github.com/gin-gonic/gin"
 )
 
 var Produtos []Produto
@@ -78,25 +78,25 @@ func main() {
 		fmt.Printf("%s - R$ %.2f\n", produto.Nome, produto.Preco)
 	}
 
-	// r := gin.New()
-	// gin.SetMode(gin.ReleaseMode)
-	// gin.DefaultWriter = ioutil.Discard
+	r := gin.New()
+	gin.SetMode(gin.ReleaseMode)
+	gin.DefaultWriter = ioutil.Discard
 
-	// r.GET("/produtos", func(c *gin.Context) {
-	// 	c.JSON(200, Produtos)
+	r.GET("/produtos", func(c *gin.Context) {
+		c.JSON(200, Produtos)
+	})
+	r.Run(":8080")
+
+	// app := fiber.New(fiber.Config{
+	// 	Prefork:     true,
+	// 	JSONEncoder: json.Marshal,
+	// 	JSONDecoder: json.Unmarshal,
 	// })
-	// r.Run(":8080")
 
-	app := fiber.New(fiber.Config{
-		Prefork:     true,
-		JSONEncoder: json.Marshal,
-		JSONDecoder: json.Unmarshal,
-	})
-
-	app.Get("/produtos", func(c *fiber.Ctx) error {
-		return c.JSON(Produtos)
-	})
-	app.Listen(":8080")
+	// app.Get("/produtos", func(c *fiber.Ctx) error {
+	// 	return c.JSON(Produtos)
+	// })
+	// app.Listen(":8080")
 
 }
 
