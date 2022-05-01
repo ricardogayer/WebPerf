@@ -46,7 +46,7 @@ Instalação do Vegeta
 brew update && brew install vegeta
 ```
 
-Executação
+Execução
 
 ```sh
 echo "GET http://localhost:8080/produtos" | vegeta attack -rate=0 -duration=30s -max-workers=8 | tee results-fiber.bin | vegeta report
